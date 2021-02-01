@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="page_background">#f2f2f7</color>
+    <color name="action_bar_title_color">#ECA48D</color>
+    <color name="under_line_color">#FFFFFF</color>
+    <color name="text_default_color">#000000</color>
+    <color name="red">#FA1100</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue_light">#00BCD4</color>
+</resources>

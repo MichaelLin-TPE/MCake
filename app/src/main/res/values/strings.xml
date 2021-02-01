@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">M Cake</string>
+    <string name="app_default_name">M Cake</string>
+    <string name="login">登入</string>
+    <string name="register">| 註冊</string>
+    <string name="user_welcome_info">今天想來點手工蛋糕，預定起來！</string>
+    <string name="user_welcome">親愛的顧客您好。</string>
+    <string name="product_list">產品清單</string>
+    <string name="memeber_center">會員中心</string>
+    <string name="search_order">訂單查詢</string>
+    <string name="shopping_cart">購物車</string>
+    <string name="contact_us">聯絡我們</string>
+</resources>
