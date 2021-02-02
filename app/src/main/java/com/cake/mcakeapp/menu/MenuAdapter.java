@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cake.mcakeapp.R;
@@ -17,6 +18,12 @@ import java.util.ArrayList;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     private ArrayList<MenuData> menuDataArrayList;
+
+    private OnNavigationMenuItemClickListener itemClickListener;
+
+    public void setOnNavigationMenuItemClickListener(OnNavigationMenuItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
 
     public void setMenuDataArrayList(ArrayList<MenuData> menuDataArrayList) {
         this.menuDataArrayList = menuDataArrayList;
@@ -32,10 +39,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         MenuData data = menuDataArrayList.get(position);
         holder.ivIcon.setImageResource(data.getImageId());
         holder.tvTitle.setText(data.getTitle());
+        holder.itemArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onMenuItemClick(holder.tvTitle.getText().toString());
+            }
+        });
     }
 
     @Override
@@ -49,10 +62,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
         private TextView tvTitle;
 
+        private ConstraintLayout itemArea;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivIcon = itemView.findViewById(R.id.menu_item_icon);
             tvTitle = itemView.findViewById(R.id.menu_item_title);
+            itemArea = itemView.findViewById(R.id.menu_item_area);
         }
     }
+
+    public interface OnNavigationMenuItemClickListener{
+        void onMenuItemClick(String title);
+    }
+
+
 }

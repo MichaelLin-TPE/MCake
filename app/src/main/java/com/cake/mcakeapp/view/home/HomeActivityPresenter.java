@@ -4,4 +4,6 @@ public interface HomeActivityPresenter {
     void onNavigationViewClickListener();
 
     void onLoadData();
+
+    void onNavigationMenuItemClickListener(String title);
 }

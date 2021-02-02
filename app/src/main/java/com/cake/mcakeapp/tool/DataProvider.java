@@ -14,11 +14,10 @@ public class DataProvider {
     public static ArrayList<MenuData> getMenuList(){
         ArrayList<MenuData> menuDataArrayList = new ArrayList<>();
         menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.product_list)));
-        menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.memeber_center)));
-        menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.search_order)));
-        menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.shopping_cart)));
-        menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.contact_us)));
-
+        menuDataArrayList.add(new MenuData(R.drawable.member, MyApplication.getInstance().getApplicationContext().getString(R.string.memeber_center)));
+        menuDataArrayList.add(new MenuData(R.drawable.order, MyApplication.getInstance().getApplicationContext().getString(R.string.search_order)));
+        menuDataArrayList.add(new MenuData(R.drawable.cart, MyApplication.getInstance().getApplicationContext().getString(R.string.shopping_cart)));
+        menuDataArrayList.add(new MenuData(R.drawable.contact, MyApplication.getInstance().getApplicationContext().getString(R.string.contact_us)));
         return menuDataArrayList;
     }
 

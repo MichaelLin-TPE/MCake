@@ -78,5 +78,36 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         MenuAdapter adapter = new MenuAdapter();
         adapter.setMenuDataArrayList(menuList);
         rvMenu.setAdapter(adapter);
+        adapter.setOnNavigationMenuItemClickListener(new MenuAdapter.OnNavigationMenuItemClickListener() {
+            @Override
+            public void onMenuItemClick(String title) {
+                presenter.onNavigationMenuItemClickListener(title);
+            }
+        });
+    }
+
+    @Override
+    public String getProduct() {
+        return getString(R.string.product_list);
+    }
+
+    @Override
+    public String getOrder() {
+        return getString(R.string.search_order);
+    }
+
+    @Override
+    public String getCart() {
+        return getString(R.string.shopping_cart);
+    }
+
+    @Override
+    public String getContact() {
+        return getString(R.string.contact_us);
+    }
+
+    @Override
+    public String getMember() {
+        return getString(R.string.memeber_center);
     }
 }

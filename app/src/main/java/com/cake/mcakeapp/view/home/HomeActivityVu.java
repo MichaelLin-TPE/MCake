@@ -10,4 +10,14 @@ public interface HomeActivityVu {
     void closeDrawer();
 
     void setNavigationRecyclerView(ArrayList<MenuData> menuList);
+
+    String getProduct();
+
+    String getOrder();
+
+    String getCart();
+
+    String getContact();
+
+    String getMember();
 }
