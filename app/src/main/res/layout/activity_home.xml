@@ -35,7 +35,7 @@
                 android:id="@+id/home_action_bar_title"
                 android:text="@string/app_default_name"
                 android:textSize="@dimen/action_bar_title_size"
-                android:textColor="@color/action_bar_title_color"
+                android:textColor="@color/app_main_color"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

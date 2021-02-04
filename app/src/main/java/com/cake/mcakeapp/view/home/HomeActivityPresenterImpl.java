@@ -1,16 +1,28 @@
 package com.cake.mcakeapp.view.home;
 
-import android.graphics.Paint;
-
+import com.cake.mcakeapp.auth.AuthHandler;
+import com.cake.mcakeapp.auth.AuthHandlerImpl;
+import com.cake.mcakeapp.data.UserData;
+import com.cake.mcakeapp.firestore.FireStoreHandler;
+import com.cake.mcakeapp.firestore.FireStoreHandlerImpl;
 import com.cake.mcakeapp.tool.DataProvider;
+import com.cake.mcakeapp.tool.MichaelLog;
+import com.google.firebase.firestore.auth.User;
 
-import java.util.Date;
+import java.util.ArrayList;
+
 
 public class HomeActivityPresenterImpl implements HomeActivityPresenter{
 
     private HomeActivityVu mView;
 
+    private AuthHandler authHandler;
+
+    private FireStoreHandler fireStoreHandler;
+
     public HomeActivityPresenterImpl(HomeActivityVu mView) {
+        authHandler = new AuthHandlerImpl();
+        fireStoreHandler = new FireStoreHandlerImpl();
         this.mView = mView;
     }
 
@@ -28,20 +40,76 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
 
     @Override
     public void onNavigationMenuItemClickListener(String title) {
+        mView.closeDrawer();
         if (title.equals(mView.getProduct())){
+
+            mView.showProductPage();
             return;
         }
         if (title.equals(mView.getOrder())){
+            mView.showOrderFragment();
             return;
         }
         if (title.equals(mView.getCart())){
+            mView.showCartFragment();
             return;
         }
         if (title.equals(mView.getContact())){
+            mView.showContactUsFragment();
             return;
         }
         if (title.equals(mView.getMember())) {
-
+            mView.showMemberCenterFragment();
+        }
+        if (title.equals(mView.getComment())){
+            mView.showCommentPage();
         }
     }
+
+    @Override
+    public void onRegisterButtonClickListener() {
+        mView.closeDrawer();
+        mView.goToRegisterPage();
+    }
+
+    @Override
+    public void onCheckUserExist() {
+        if (authHandler.getCurrentUser()){
+            fireStoreHandler.getUserList(getUserListListener);
+            MichaelLog.i("有使用者");
+            mView.showLoginButtonAndRegisterButton(false);
+        }else {
+            MichaelLog.i("無使用者");
+            mView.setUserEmpty();
+            mView.showLoginButtonAndRegisterButton(true);
+        }
+    }
+
+    @Override
+    public void onLoginButtonClickListener() {
+        mView.closeDrawer();
+        mView.goToLoginPage();
+    }
+
+    @Override
+    public void onLoadProductPage() {
+        mView.showProductPage();
+    }
+
+    private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>> getUserListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>>() {
+        @Override
+        public void onSuccessful(ArrayList<UserData> data) {
+            for (UserData userData : data){
+                if (userData.getEmail().equals(authHandler.getCurrentUserEmail())){
+                    mView.setUserName(userData.getName());
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public void onFail(String message) {
+            MichaelLog.i("取不到使用者資料");
+        }
+    };
 }

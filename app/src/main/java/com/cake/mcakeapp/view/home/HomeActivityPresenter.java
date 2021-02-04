@@ -6,4 +6,12 @@ public interface HomeActivityPresenter {
     void onLoadData();
 
     void onNavigationMenuItemClickListener(String title);
+
+    void onRegisterButtonClickListener();
+
+    void onCheckUserExist();
+
+    void onLoginButtonClickListener();
+
+    void onLoadProductPage();
 }

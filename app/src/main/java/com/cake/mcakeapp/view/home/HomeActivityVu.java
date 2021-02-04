@@ -20,4 +20,32 @@ public interface HomeActivityVu {
     String getContact();
 
     String getMember();
+
+    void goToRegisterPage();
+
+    String getRegister();
+
+    void setActionBarTitle(String title);
+
+    void setUserEmpty();
+
+    void setUserName(String name);
+
+    void goToLoginPage();
+
+    void showLoginButtonAndRegisterButton(boolean isShow);
+
+    void showProductPage();
+
+    void showOrderFragment();
+
+    void showCartFragment();
+
+    void showContactUsFragment();
+
+    void showMemberCenterFragment();
+
+    String getComment();
+
+    void showCommentPage();
 }

@@ -18,6 +18,7 @@ public class DataProvider {
         menuDataArrayList.add(new MenuData(R.drawable.order, MyApplication.getInstance().getApplicationContext().getString(R.string.search_order)));
         menuDataArrayList.add(new MenuData(R.drawable.cart, MyApplication.getInstance().getApplicationContext().getString(R.string.shopping_cart)));
         menuDataArrayList.add(new MenuData(R.drawable.contact, MyApplication.getInstance().getApplicationContext().getString(R.string.contact_us)));
+        menuDataArrayList.add(new MenuData(R.drawable.comment,MyApplication.getInstance().getApplicationContext().getString(R.string.comment)));
         return menuDataArrayList;
     }
 
