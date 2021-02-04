@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment;
 import com.cake.mcakeapp.R;
 
 
-public class CommentFragment extends Fragment {
+public class CommentFragment extends Fragment implements CommentFragmentVu{
 
+
+    private CommentFragmentPresenter presenter;
 
 
     public static CommentFragment newInstance() {
@@ -24,7 +26,11 @@ public class CommentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initPresenter();
+    }
 
+    private void initPresenter() {
+        presenter = new CommentFragmentPresenterImpl(this);
     }
 
     @Override
