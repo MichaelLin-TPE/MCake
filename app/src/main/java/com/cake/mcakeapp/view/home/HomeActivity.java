@@ -57,16 +57,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         initView();
 
         presenter.onLoadData();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         presenter.onCheckUserExist();
         presenter.onLoadProductPage();
     }
-
     private void initView() {
         tvUserName = findViewById(R.id.navigation_header_name);
         drawerLayout = findViewById(R.id.home_drawer_layout);
