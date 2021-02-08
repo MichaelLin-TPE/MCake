@@ -1,6 +1,7 @@
 package com.cake.mcakeapp.view.comment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,10 +12,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.cake.mcakeapp.R;
 import com.cake.mcakeapp.tool.GlideEngine;
 import com.cake.mcakeapp.tool.MichaelLog;
+import com.cake.mcakeapp.tool.Tools;
+import com.cake.mcakeapp.view.write_comment.WriteCommentActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -36,10 +40,13 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
 
     private Context context;
 
+    private FragmentActivity fragmentActivity;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+        this.fragmentActivity = (FragmentActivity)context;
     }
 
     public static CommentFragment newInstance() {
@@ -107,6 +114,7 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
                 });
     }
 
+
     private void onCatchPhotoResult(List<LocalMedia> result) {
         ArrayList<byte[]> photoArray = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
@@ -126,7 +134,14 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
         }
         if (photoArray.size() != 0){
             MichaelLog.i("照片選了 "+photoArray.size()+" 張");
-            presenter.onCatchPhotoListener(photoArray);
         }
     }
+
+    @Override
+    public void goToWriteCommentActivity() {
+        Intent it = new Intent(context, WriteCommentActivity.class);
+        startActivity(it);
+        Tools.startActivityInAnim(fragmentActivity);
+    }
+
 }

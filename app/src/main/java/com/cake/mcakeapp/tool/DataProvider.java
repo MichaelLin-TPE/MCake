@@ -11,6 +11,17 @@ import java.util.ArrayList;
 
 public class DataProvider {
 
+    private static ArrayList<byte[]> photoArray;
+
+
+    public static void setPhotoArray(ArrayList<byte[]> photo){
+        photoArray = photo;
+    }
+    public static ArrayList<byte[]> getPhotoArray(){
+        return photoArray;
+    }
+
+
     public static ArrayList<MenuData> getMenuList(){
         ArrayList<MenuData> menuDataArrayList = new ArrayList<>();
         menuDataArrayList.add(new MenuData(R.drawable.product_list, MyApplication.getInstance().getApplicationContext().getString(R.string.product_list)));

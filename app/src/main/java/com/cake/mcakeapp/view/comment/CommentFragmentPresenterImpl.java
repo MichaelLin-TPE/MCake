@@ -12,11 +12,10 @@ public class CommentFragmentPresenterImpl implements CommentFragmentPresenter {
 
     @Override
     public void onAddCommentButtonClickListener() {
-        mView.showPictureSelector();
-    }
 
-    @Override
-    public void onCatchPhotoListener(ArrayList<byte[]> photoArray) {
+        mView.goToWriteCommentActivity();
 
     }
+
+
 }

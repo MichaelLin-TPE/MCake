@@ -54,4 +54,8 @@
     <string name="account_error">請輸入帳號</string>
     <string name="account_does_not_exist">帳號不存在，請重新再試。</string>
     <string name="email_not_right">Email格式不正確。</string>
+    <string name="write_comment">寫下評論</string>
+    <string name="photo_title">照片</string>
+    <string name="add_photo">想放上產品照片嗎？</string>
+    <string name="write_something">寫點什麼吧～</string>
 </resources>
