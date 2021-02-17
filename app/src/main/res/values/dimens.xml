@@ -17,4 +17,9 @@
     <dimen name="normal_action_bar_title_size">20sp</dimen>
     <dimen name="star_icon_size">30dp</dimen>
     <dimen name="add_photo_icon_size">50dp</dimen>
+    <dimen name="comment_photo_width">150dp</dimen>
+    <dimen name="comment_photo_height">150dp</dimen>
+    <dimen name="user_photo_size">30dp</dimen>
+    <dimen name="comment_star_size">20dp</dimen>
+    <dimen name="comment_photo_size">80dp</dimen>
 </resources>

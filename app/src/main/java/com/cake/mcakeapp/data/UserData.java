@@ -14,6 +14,16 @@ public class UserData {
 
     private String uuid;
 
+    private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
     public String getName() {
         return name;
     }

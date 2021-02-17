@@ -58,4 +58,11 @@
     <string name="photo_title">照片</string>
     <string name="add_photo">想放上產品照片嗎？</string>
     <string name="write_something">寫點什麼吧～</string>
+    <string name="finish">完成</string>
+    <string name="comment_empty">講點什麼吧，謝謝</string>
+    <string name="upload_fail">上傳失敗</string>
+    <string name="get_photo_url_fail">取得網址失敗，請稍後再試。</string>
+    <string name="fail_to_get_photo_url">無法取得照片網址，請稍後再試。</string>
+    <string name="title_upload_photo">上傳中，請稍候</string>
+    <string name="fail_to_get_comment_list">拿不到評論資料</string>
 </resources>

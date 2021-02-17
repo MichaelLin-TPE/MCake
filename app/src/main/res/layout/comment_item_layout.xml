@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        android:background="@drawable/comment_item_shape"
+        android:id="@+id/comment_item_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/comment_item_user_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/user"
+            app:riv_oval="true"
+            android:layout_width="@dimen/user_photo_size"
+            android:layout_height="@dimen/user_photo_size"/>
+
+        <TextView
+            android:id="@+id/comment_item_user_name"
+            android:textColor="@color/text_default_color"
+            tools:text="Michael"
+            android:textSize="@dimen/small_text_size_14sp"
+            app:layout_constraintTop_toTopOf="@id/comment_item_user_photo"
+            app:layout_constraintBottom_toBottomOf="@id/comment_item_user_photo"
+            app:layout_constraintLeft_toRightOf="@id/comment_item_user_photo"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/comment_item_star"
+            android:contentDescription="@null"
+            android:src="@drawable/star_full"
+            app:layout_constraintTop_toTopOf="@id/comment_item_user_photo"
+            app:layout_constraintBottom_toBottomOf="@id/comment_item_user_photo"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="@dimen/comment_star_size"
+            android:layout_height="@dimen/comment_star_size"/>
+
+        <TextView
+            android:id="@+id/comment_item_star_amount"
+            app:layout_constraintTop_toTopOf="@id/comment_item_star"
+            app:layout_constraintBottom_toBottomOf="@id/comment_item_star"
+            app:layout_constraintRight_toLeftOf="@id/comment_item_star"
+            android:textSize="@dimen/small_text_size_16sp"
+            tools:text="3"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/text_default_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comment_item_comment_content"
+            android:textSize="@dimen/small_text_size_14sp"
+            android:textColor="@color/text_default_color"
+            tools:text="testtestjsklfjddsfj"
+            app:layout_constraintTop_toBottomOf="@id/comment_item_user_photo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_item_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/comment_item_comment_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comment_item_time"
+            app:layout_constraintTop_toBottomOf="@id/comment_item_recycler_view"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
+            tools:text="12:00pm 上傳"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/small_text_size_12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

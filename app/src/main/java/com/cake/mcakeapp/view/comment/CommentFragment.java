@@ -5,19 +5,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cake.mcakeapp.R;
+import com.cake.mcakeapp.data.CommentData;
 import com.cake.mcakeapp.tool.GlideEngine;
 import com.cake.mcakeapp.tool.MichaelLog;
 import com.cake.mcakeapp.tool.Tools;
+import com.cake.mcakeapp.view.login.LoginFragment;
 import com.cake.mcakeapp.view.write_comment.WriteCommentActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.luck.picture.lib.PictureSelector;
@@ -41,6 +49,12 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
     private Context context;
 
     private FragmentActivity fragmentActivity;
+
+    private RecyclerView rvComment;
+
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    private ArrayList<CommentData> commentDataList;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -79,6 +93,11 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
     }
 
     private void initView(View view) {
+
+        rvComment = view.findViewById(R.id.comment_recycler_view);
+
+        rvComment.setLayoutManager(new LinearLayoutManager(fragmentActivity));
+
         btnAdd = view.findViewById(R.id.comment_btn_add_comment);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +106,14 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
                 presenter.onAddCommentButtonClickListener();
             }
         });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        presenter.onLoadData();
+
     }
 
     @Override
@@ -143,5 +170,33 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
         startActivity(it);
         Tools.startActivityInAnim(fragmentActivity);
     }
+
+    @Override
+    public void goToSignUpPage() {
+        Tools.replace(R.id.home_frame_layout,fragmentActivity.getSupportFragmentManager(), LoginFragment.newInstance(),false,LoginFragment.newInstance().getClass().getSimpleName());
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(fragmentActivity,message,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showCommentList(ArrayList<CommentData> commentDataList) {
+        this.commentDataList = commentDataList;
+        handler.post(showCommentView);
+
+
+
+    }
+
+    private Runnable showCommentView = new Runnable() {
+        @Override
+        public void run() {
+            CommentAdapter adapter = new CommentAdapter();
+            adapter.setCommentList(commentDataList);
+            rvComment.setAdapter(adapter);
+        }
+    };
 
 }

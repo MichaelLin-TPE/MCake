@@ -5,4 +5,5 @@ import java.util.ArrayList;
 public interface CommentFragmentPresenter {
     void onAddCommentButtonClickListener();
 
+    void onLoadData();
 }

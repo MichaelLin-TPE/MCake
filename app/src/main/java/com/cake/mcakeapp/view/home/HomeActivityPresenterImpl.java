@@ -2,10 +2,12 @@ package com.cake.mcakeapp.view.home;
 
 import com.cake.mcakeapp.auth.AuthHandler;
 import com.cake.mcakeapp.auth.AuthHandlerImpl;
+import com.cake.mcakeapp.data.AccountManager;
 import com.cake.mcakeapp.data.UserData;
 import com.cake.mcakeapp.firestore.FireStoreHandler;
 import com.cake.mcakeapp.firestore.FireStoreHandlerImpl;
 import com.cake.mcakeapp.tool.DataProvider;
+import com.cake.mcakeapp.tool.JsonHelper;
 import com.cake.mcakeapp.tool.MichaelLog;
 import com.google.firebase.firestore.auth.User;
 
@@ -99,12 +101,21 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>> getUserListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>>() {
         @Override
         public void onSuccessful(ArrayList<UserData> data) {
+            String userName = "",uuid = "";
             for (UserData userData : data){
                 if (userData.getEmail().equals(authHandler.getCurrentUserEmail())){
-                    mView.setUserName(userData.getName());
+                    userName = userData.getName();
+                    uuid = userData.getUuid();
                     break;
                 }
             }
+            mView.setUserName(userName);
+
+
+            //儲存必要資訊
+            String json = JsonHelper.getGson().toJson(data);
+            AccountManager.getInstance().setUserListJson(json);
+            AccountManager.getInstance().setUserUUID(uuid);
         }
 
         @Override
