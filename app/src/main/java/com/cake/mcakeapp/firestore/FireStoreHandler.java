@@ -4,6 +4,7 @@ import com.cake.mcakeapp.data.CommentData;
 import com.cake.mcakeapp.data.ProductData;
 import com.cake.mcakeapp.data.UserData;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public interface FireStoreHandler {
@@ -25,13 +26,13 @@ public interface FireStoreHandler {
 
     void addFavoriteProduct(ProductData data);
 
-    void catchOriginalFavoriteData();
+    void catchOriginalFavoriteData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getFavoriteListListener);
 
     ArrayList<ProductData> getFavoriteList();
 
     void addCartProduct(ProductData data);
 
-    void catchOriginalCartData();
+    void catchOriginalCartData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getCartListListener);
 
     ArrayList<ProductData> getCartList();
 

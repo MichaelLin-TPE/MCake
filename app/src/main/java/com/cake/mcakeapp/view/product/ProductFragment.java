@@ -1,14 +1,16 @@
 package com.cake.mcakeapp.view.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,9 +20,10 @@ import android.widget.Toast;
 
 import com.cake.mcakeapp.R;
 import com.cake.mcakeapp.data.ProductData;
-import com.cake.mcakeapp.firestore.FireStoreHandler;
-import com.cake.mcakeapp.firestore.FireStoreHandlerImpl;
-import com.cake.mcakeapp.tool.JsonHelper;
+import com.cake.mcakeapp.tool.Tools;
+import com.cake.mcakeapp.view.detail.ProductDetailActivity;
+import com.cake.mcakeapp.view.login.LoginFragment;
+import com.cake.mcakeapp.view.register.RegisterFragment;
 import com.cake.mcakeapp.widget.SignInAndRegisterDialog;
 
 import java.util.ArrayList;
@@ -33,6 +36,8 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
     private RecyclerView rvProductList;
 
     private FragmentActivity fragmentActivity;
+
+    public static final String PRODUCT_DATA = "product_data";
 
     private Context context;
 
@@ -115,6 +120,11 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
             public void onNeedLogin() {
                 presenter.onNeedToLogin();
             }
+
+            @Override
+            public void onItemClick(ProductData data) {
+                presenter.onProductItemClickListener(data);
+            }
         });
     }
 
@@ -124,14 +134,31 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
         signInAndRegisterDialog.setOnSignInRegisterButtonClickListener(new SignInAndRegisterDialog.OnSignInRegisterButtonClickListener() {
             @Override
             public void onRegisterClick() {
-                
+                presenter.onRegisterButtonClickListener();
             }
 
             @Override
             public void onLoginClick() {
-
+                presenter.onLoginButtonClickListener();
             }
         });
         signInAndRegisterDialog.show(fragmentActivity.getSupportFragmentManager(),"dialog");
+    }
+
+    @Override
+    public void goToRegisterPage() {
+        Tools.replace(R.id.home_frame_layout,fragmentActivity.getSupportFragmentManager(), RegisterFragment.newInstance(RegisterFragment.REGISTER),false,RegisterFragment.newInstance(RegisterFragment.REGISTER).getClass().getSimpleName());
+    }
+
+    @Override
+    public void goToLoginPage() {
+        Tools.replace(R.id.home_frame_layout,fragmentActivity.getSupportFragmentManager(), LoginFragment.newInstance(),false,LoginFragment.newInstance().getClass().getSimpleName());
+    }
+
+    @Override
+    public void goToProductDetailActivity(ProductData data) {
+        Intent it = new Intent(context, ProductDetailActivity.class);
+        it.putExtra(PRODUCT_DATA,data);
+        startActivity(it);
     }
 }

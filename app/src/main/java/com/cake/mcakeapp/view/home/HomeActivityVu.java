@@ -48,4 +48,8 @@ public interface HomeActivityVu {
     String getComment();
 
     void showCommentPage();
+
+    void setCartCount(int cartCount);
+
+    void showCartCount(boolean isShow);
 }

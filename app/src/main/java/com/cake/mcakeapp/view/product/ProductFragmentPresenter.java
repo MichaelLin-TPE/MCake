@@ -10,4 +10,10 @@ public interface ProductFragmentPresenter {
     void onProductCartClickListener(ProductData data);
 
     void onNeedToLogin();
+
+    void onRegisterButtonClickListener();
+
+    void onLoginButtonClickListener();
+
+    void onProductItemClickListener(ProductData data);
 }

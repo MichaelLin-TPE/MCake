@@ -61,6 +61,10 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         presenter.onLoadProductPage();
         presenter.onCheckUserCartAmount();
     }
+
+
+
+
     private void initView() {
         tvCartCount = findViewById(R.id.home_action_bar_count);
         tvUserName = findViewById(R.id.navigation_header_name);
@@ -242,6 +246,16 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     @Override
     public void showCommentPage() {
         Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), CommentFragment.newInstance(),false,CommentFragment.newInstance().getClass().getSimpleName());
+    }
+
+    @Override
+    public void setCartCount(int cartCount) {
+        tvCartCount.setText(String.format(Locale.getDefault(),"%d",cartCount));
+    }
+
+    @Override
+    public void showCartCount(boolean isShow) {
+        tvCartCount.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
 

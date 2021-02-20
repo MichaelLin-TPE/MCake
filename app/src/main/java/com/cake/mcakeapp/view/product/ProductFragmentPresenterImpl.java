@@ -13,13 +13,10 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
 
     private FireStoreHandler fireStoreHandler;
 
-    private ArrayList<ProductData> favoriteList , cartList;
 
     public ProductFragmentPresenterImpl(ProductFragmentVu mView) {
         this.mView = mView;
         fireStoreHandler = new FireStoreHandlerImpl();
-        fireStoreHandler.catchOriginalFavoriteData();
-        fireStoreHandler.catchOriginalCartData();
     }
 
     @Override
@@ -44,6 +41,21 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
         mView.showNeedToLoginDialog();
     }
 
+    @Override
+    public void onRegisterButtonClickListener() {
+        mView.goToRegisterPage();
+    }
+
+    @Override
+    public void onLoginButtonClickListener() {
+        mView.goToLoginPage();
+    }
+
+    @Override
+    public void onProductItemClickListener(ProductData data) {
+        mView.goToProductDetailActivity(data);
+    }
+
     private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>> getProductListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
         @Override
         public void onSuccessful(ArrayList<ProductData> data) {
@@ -52,30 +64,12 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
                 return;
             }
 
-
-            favoriteList = fireStoreHandler.getFavoriteList();
-            cartList = fireStoreHandler.getCartList();
-
-
             //比對個人資料
-            for (ProductData cart : cartList){
-                for (ProductData product : data){
-                    if (cart.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
-                        product.setCheckCart(cart.isCheckCart());
-                    }
-                }
-            }
-
-            for (ProductData fav : favoriteList){
-                for (ProductData product : data){
-                    if (fav.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
-                        product.setCheckHeart(fav.isCheckHeart());
-                    }
-                }
-            }
+            checkPersonalCartData(data);
 
 
-            mView.showProductList(data);
+
+
         }
 
         @Override
@@ -83,4 +77,50 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
             mView.showToast(message);
         }
     };
+
+    private void checkPersonalCartData(ArrayList<ProductData> data) {
+
+        fireStoreHandler.catchOriginalCartData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
+            @Override
+            public void onSuccessful(ArrayList<ProductData> cartList) {
+                for (ProductData cart : cartList){
+                    for (ProductData product : data){
+                        if (cart.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
+                            product.setCheckCart(cart.isCheckCart());
+                        }
+                    }
+                }
+                checkPersonalFavoriteData(data);
+
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+
+    }
+
+    private void checkPersonalFavoriteData(ArrayList<ProductData> data) {
+        fireStoreHandler.catchOriginalFavoriteData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
+            @Override
+            public void onSuccessful(ArrayList<ProductData> favoriteList) {
+                for (ProductData fav : favoriteList){
+                    for (ProductData product : data){
+                        if (fav.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
+                            product.setCheckHeart(fav.isCheckHeart());
+                        }
+                    }
+                }
+
+                mView.showProductList(data);
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+    }
 }

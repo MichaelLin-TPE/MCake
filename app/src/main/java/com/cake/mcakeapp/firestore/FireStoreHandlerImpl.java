@@ -247,18 +247,21 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     }
 
     @Override
-    public void catchOriginalFavoriteData() {
+    public void catchOriginalFavoriteData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getFavoriteListListener) {
         allFavoriteList = new ArrayList<>();
 
-        if (authHandler.getCurrentUserEmail() == null ){
+        if (!authHandler.getCurrentUser()){
+            getFavoriteListListener.onSuccessful(allFavoriteList);
             return;
         }
+
 
         DocumentReference documentReference = firebaseFirestore.collection(FAVORITE_DATA).document(authHandler.getCurrentUserEmail());
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null){
+                    getFavoriteListListener.onSuccessful(allFavoriteList);
                     return;
                 }
 
@@ -266,15 +269,20 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
                     String json = (String)value.get("json");
 
                     if (json == null){
+                        getFavoriteListListener.onSuccessful(allFavoriteList);
                         return;
                     }
 
                     allFavoriteList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
 
                     if (allFavoriteList == null || allFavoriteList.isEmpty()){
+                        getFavoriteListListener.onSuccessful(allFavoriteList);
                         return;
                     }
                     MichaelLog.i("取得我的最愛資料");
+                    getFavoriteListListener.onSuccessful(allFavoriteList);
+                } else {
+                    getFavoriteListListener.onSuccessful(allFavoriteList);
                 }
             }
         });
@@ -308,10 +316,11 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     }
 
     @Override
-    public void catchOriginalCartData() {
+    public void catchOriginalCartData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getCartListListener) {
         cartList = new ArrayList<>();
 
-        if (authHandler.getCurrentUserEmail() == null ){
+        if (!authHandler.getCurrentUser()){
+            getCartListListener.onSuccessful(cartList);
             return;
         }
 
@@ -321,6 +330,7 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null){
+                    getCartListListener.onSuccessful(cartList);
                     return;
                 }
 
@@ -328,15 +338,20 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
                     String json = (String)value.get("json");
 
                     if (json == null){
+                        getCartListListener.onSuccessful(cartList);
                         return;
                     }
 
                     cartList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
 
                     if (cartList == null || cartList.isEmpty()){
+                        getCartListListener.onSuccessful(cartList);
                         return;
                     }
+                    getCartListListener.onSuccessful(cartList);
                     MichaelLog.i("取得我的購物車資料");
+                }else {
+                    getCartListListener.onSuccessful(cartList);
                 }
             }
         });

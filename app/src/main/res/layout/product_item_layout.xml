@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_item_area"
     android:padding="20dp"
     android:background="@drawable/product_item_shadow"
     android:layout_height="wrap_content">

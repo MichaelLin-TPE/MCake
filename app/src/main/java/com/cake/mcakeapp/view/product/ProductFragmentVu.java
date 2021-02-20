@@ -12,4 +12,10 @@ public interface ProductFragmentVu {
     void showProductList(ArrayList<ProductData> data);
 
     void showNeedToLoginDialog();
+
+    void goToRegisterPage();
+
+    void goToLoginPage();
+
+    void goToProductDetailActivity(ProductData data);
 }

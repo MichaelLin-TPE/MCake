@@ -26,7 +26,7 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     public HomeActivityPresenterImpl(HomeActivityVu mView) {
         authHandler = new AuthHandlerImpl();
         fireStoreHandler = new FireStoreHandlerImpl();
-        fireStoreHandler.catchOriginalCartData();
+
         this.mView = mView;
     }
 
@@ -78,8 +78,8 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
 
     @Override
     public void onCheckUserExist() {
+        fireStoreHandler.getUserList(getUserListListener);
         if (authHandler.getCurrentUser()){
-            fireStoreHandler.getUserList(getUserListListener);
             MichaelLog.i("有使用者");
             mView.showLoginButtonAndRegisterButton(false);
         }else {
@@ -103,11 +103,25 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     @Override
     public void onCheckUserCartAmount() {
 
-        ArrayList<ProductData> cartList = fireStoreHandler.getCartList();
+        fireStoreHandler.catchOriginalCartData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
+            @Override
+            public void onSuccessful(ArrayList<ProductData> data) {
+                if (data == null || data.isEmpty()){
+                    mView.showCartCount(false);
+                    return;
+                }
+                mView.showCartCount(true);
+                mView.setCartCount(data.size());
+            }
 
-        if (cartList == null || cartList.isEmpty()){
+            @Override
+            public void onFail(String message) {
 
-        }
+            }
+        });
+
+
+
     }
 
     private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>> getUserListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>>() {
@@ -121,9 +135,12 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
                     break;
                 }
             }
-            mView.setUserName(userName);
 
+            if (!userName.isEmpty()){
+                mView.setUserName(userName);
+            }
 
+            
             //儲存必要資訊
             String json = JsonHelper.getGson().toJson(data);
             AccountManager.getInstance().setUserListJson(json);

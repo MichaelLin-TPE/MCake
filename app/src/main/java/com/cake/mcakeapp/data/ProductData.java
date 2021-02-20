@@ -1,8 +1,9 @@
 package com.cake.mcakeapp.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProductData {
+public class ProductData implements Serializable {
 
     //品名
     private String name;

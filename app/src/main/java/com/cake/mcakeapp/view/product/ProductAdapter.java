@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cake.mcakeapp.R;
@@ -116,6 +117,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             }
         });
 
+        holder.itemArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconClickListener.onItemClick(data);
+            }
+        });
+
     }
 
     @Override
@@ -131,6 +139,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         private TextView tvTitle,tvState,tvPrice;
 
+        private ConstraintLayout itemArea;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -140,6 +150,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tvTitle = itemView.findViewById(R.id.product_item_title);
             tvState = itemView.findViewById(R.id.product_item_state);
             tvPrice = itemView.findViewById(R.id.product_item_price);
+            itemArea = itemView.findViewById(R.id.product_item_area);
 
         }
     }
@@ -148,5 +159,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         void onClickHeart(ProductData data);
         void onClickCart(ProductData data);
         void onNeedLogin();
+        void onItemClick(ProductData data);
     }
 }
