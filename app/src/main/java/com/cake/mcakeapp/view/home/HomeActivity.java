@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
     private RecyclerView rvMenu;
 
-    private TextView tvActionBarTitle, tvUserName , tvRegister,tvLogin;
+    private TextView tvActionBarTitle, tvUserName , tvRegister,tvLogin,tvCartCount;
 
 
     @Override
@@ -59,14 +59,18 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         presenter.onLoadData();
         presenter.onCheckUserExist();
         presenter.onLoadProductPage();
+        presenter.onCheckUserCartAmount();
     }
     private void initView() {
+        tvCartCount = findViewById(R.id.home_action_bar_count);
         tvUserName = findViewById(R.id.navigation_header_name);
         drawerLayout = findViewById(R.id.home_drawer_layout);
         rvMenu = findViewById(R.id.navigation_header_recycler_view);
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
         tvActionBarTitle = findViewById(R.id.home_action_bar_title);
         tvRegister = findViewById(R.id.navigation_header_register);
+
+
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

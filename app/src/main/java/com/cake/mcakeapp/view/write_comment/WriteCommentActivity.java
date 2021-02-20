@@ -38,7 +38,7 @@ public class WriteCommentActivity extends AppCompatActivity implements WriteComm
 
     private ImageView ivAddPhoto;
 
-    private TextView tvAddPhotoTitle , tvPhotoTitle,tvFinish;
+    private TextView tvAddPhotoTitle , tvPhotoTitle,tvFinish,tvReSelectPhoto;
 
     private EditText edComment;
 
@@ -71,6 +71,8 @@ public class WriteCommentActivity extends AppCompatActivity implements WriteComm
     private void initView() {
         ImageView ivBack = findViewById(R.id.write_comment_action_bar_back);
 
+        tvReSelectPhoto = findViewById(R.id.write_comment_re_select_photo);
+
         ivAddPhoto = findViewById(R.id.write_comment_add_photo);
 
         tvAddPhotoTitle = findViewById(R.id.write_comment_add_photo_title);
@@ -82,6 +84,13 @@ public class WriteCommentActivity extends AppCompatActivity implements WriteComm
         tvFinish = findViewById(R.id.write_comment_action_bar_finish);
 
         edComment = findViewById(R.id.write_comment_edit);
+
+        tvReSelectPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onShowSelectPhotoView();
+            }
+        });
 
         tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +236,7 @@ public class WriteCommentActivity extends AppCompatActivity implements WriteComm
     public void showPhotoView(boolean isShow) {
         rvPhoto.setVisibility(isShow ? View.VISIBLE : View.GONE);
         tvPhotoTitle.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        tvReSelectPhoto.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     @Override

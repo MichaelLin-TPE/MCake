@@ -56,5 +56,10 @@ public class CommentFragmentPresenterImpl implements CommentFragmentPresenter {
         });
     }
 
+    @Override
+    public void onPhotoClickListener(String url) {
+        mView.showPhotoDialog(url);
+    }
+
 
 }

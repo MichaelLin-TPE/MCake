@@ -3,7 +3,6 @@ package com.cake.mcakeapp.view.comment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +15,7 @@ import com.cake.mcakeapp.data.AccountManager;
 import com.cake.mcakeapp.data.CommentData;
 import com.cake.mcakeapp.data.UserData;
 import com.cake.mcakeapp.tool.ImageHelper;
-import com.cake.mcakeapp.view.write_comment.PhotoAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.nostra13.universalimageloader.utils.L;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +25,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
     private ArrayList<CommentData> commentList;
+
+    private CommentPhotoAdapter.OnPhotoClickListener photoClickListener;
+
+    public void setOnPhotoClickListener(CommentPhotoAdapter.OnPhotoClickListener photoClickListener){
+        this.photoClickListener = photoClickListener;
+    }
 
     public void setCommentList(ArrayList<CommentData> commentList) {
         this.commentList = commentList;
@@ -48,13 +50,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         CommentData data = commentList.get(position);
         holder.tvComment.setText(data.getComment());
         holder.tvTime.setText(String.format(Locale.getDefault(),"%s %s",new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(new Date(data.getTimeMillis())) , "上傳"));
-        holder.tvStarAmount.setText(data.getStarAmount()+"");
+        holder.tvStarAmount.setText(String.format(Locale.getDefault(),"%d",data.getStarAmount()));
 
         catchUserData(holder,data);
+
+        if (data.getPhotoUrlArray() == null || data.getPhotoUrlArray().isEmpty()){
+            return;
+        }
 
         CommentPhotoAdapter adapter = new CommentPhotoAdapter();
         adapter.setPhotoUrlArray(data.getPhotoUrlArray());
         holder.recyclerView.setAdapter(adapter);
+        adapter.setOnPhotoClickListener(new CommentPhotoAdapter.OnPhotoClickListener() {
+            @Override
+            public void onClickPhoto(String url) {
+                photoClickListener.onClickPhoto(url);
+            }
+        });
 
     }
 
@@ -77,7 +89,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return commentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private RoundedImageView tvPhoto;
 

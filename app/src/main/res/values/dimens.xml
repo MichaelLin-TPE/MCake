@@ -22,4 +22,6 @@
     <dimen name="user_photo_size">30dp</dimen>
     <dimen name="comment_star_size">20dp</dimen>
     <dimen name="comment_photo_size">80dp</dimen>
+    <dimen name="product_photo_height">150dp</dimen>
+    <dimen name="product_heart_size">20dp</dimen>
 </resources>

@@ -6,4 +6,6 @@ public interface CommentFragmentPresenter {
     void onAddCommentButtonClickListener();
 
     void onLoadData();
+
+    void onPhotoClickListener(String url);
 }

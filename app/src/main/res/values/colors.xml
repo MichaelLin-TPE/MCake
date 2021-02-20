@@ -13,4 +13,5 @@
     <color name="btn_pressed_color">#D1B9B7</color>
     <color name="grey">#959393</color>
     <color name="press_color">#F1C78A</color>
+    <color name="stroke_line">#73A7A6A5</color>
 </resources>

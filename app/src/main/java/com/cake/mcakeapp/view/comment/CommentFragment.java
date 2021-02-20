@@ -27,6 +27,7 @@ import com.cake.mcakeapp.tool.MichaelLog;
 import com.cake.mcakeapp.tool.Tools;
 import com.cake.mcakeapp.view.login.LoginFragment;
 import com.cake.mcakeapp.view.write_comment.WriteCommentActivity;
+import com.cake.mcakeapp.widget.PhotoDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CommentFragment extends Fragment implements CommentFragmentVu{
+public class CommentFragment extends Fragment implements CommentFragmentVu {
 
 
     private CommentFragmentPresenter presenter;
@@ -60,7 +61,7 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
-        this.fragmentActivity = (FragmentActivity)context;
+        this.fragmentActivity = (FragmentActivity) context;
     }
 
     public static CommentFragment newInstance() {
@@ -114,54 +115,7 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
 
         presenter.onLoadData();
 
-    }
 
-    @Override
-    public void showPictureSelector() {
-        //圖片選擇器
-        PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .loadImageEngine(GlideEngine.createGlideEngine())
-                .maxSelectNum(3)
-                .compress(true)
-                .enableCrop(true)
-                .hideBottomControls(false)
-                .showCropFrame(false)
-                .freeStyleCropEnabled(true)
-                .forResult(new OnResultCallbackListener<LocalMedia>() {
-                    @Override
-                    public void onResult(List<LocalMedia> result) {
-                        onCatchPhotoResult(result);
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
-    }
-
-
-    private void onCatchPhotoResult(List<LocalMedia> result) {
-        ArrayList<byte[]> photoArray = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            File file = new File(result.get(i).getCutPath());
-            Uri uri = Uri.fromFile(file);
-            try {
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-                byte[] byteArray = stream.toByteArray();
-                if (byteArray.length != 0) {
-                    photoArray.add(byteArray);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if (photoArray.size() != 0){
-            MichaelLog.i("照片選了 "+photoArray.size()+" 張");
-        }
     }
 
     @Override
@@ -173,12 +127,12 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
 
     @Override
     public void goToSignUpPage() {
-        Tools.replace(R.id.home_frame_layout,fragmentActivity.getSupportFragmentManager(), LoginFragment.newInstance(),false,LoginFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, fragmentActivity.getSupportFragmentManager(), LoginFragment.newInstance(), false, LoginFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(fragmentActivity,message,Toast.LENGTH_LONG).show();
+        Toast.makeText(fragmentActivity, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -187,7 +141,12 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
         handler.post(showCommentView);
 
 
+    }
 
+    @Override
+    public void showPhotoDialog(String url) {
+        PhotoDialog photoDialog = PhotoDialog.newInstance(url);
+        photoDialog.show(fragmentActivity.getSupportFragmentManager(), "dialog");
     }
 
     private Runnable showCommentView = new Runnable() {
@@ -196,6 +155,13 @@ public class CommentFragment extends Fragment implements CommentFragmentVu{
             CommentAdapter adapter = new CommentAdapter();
             adapter.setCommentList(commentDataList);
             rvComment.setAdapter(adapter);
+
+            adapter.setOnPhotoClickListener(new CommentPhotoAdapter.OnPhotoClickListener() {
+                @Override
+                public void onClickPhoto(String url) {
+                    presenter.onPhotoClickListener(url);
+                }
+            });
         }
     };
 

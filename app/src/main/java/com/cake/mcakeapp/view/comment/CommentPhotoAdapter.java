@@ -17,6 +17,12 @@ public class CommentPhotoAdapter extends RecyclerView.Adapter<CommentPhotoAdapte
 
     private ArrayList<String> photoUrlArray;
 
+    private OnPhotoClickListener photoClickListener;
+
+    public void setOnPhotoClickListener(OnPhotoClickListener photoClickListener){
+        this.photoClickListener = photoClickListener;
+    }
+
     public void setPhotoUrlArray(ArrayList<String> photoUrlArray) {
         this.photoUrlArray = photoUrlArray;
     }
@@ -34,6 +40,13 @@ public class CommentPhotoAdapter extends RecyclerView.Adapter<CommentPhotoAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String url = photoUrlArray.get(position);
         ImageHelper.getInstance().setImageResource(holder.tvPhoto,url);
+
+        holder.tvPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoClickListener.onClickPhoto(url);
+            }
+        });
     }
 
     @Override
@@ -51,5 +64,10 @@ public class CommentPhotoAdapter extends RecyclerView.Adapter<CommentPhotoAdapte
             tvPhoto = itemView.findViewById(R.id.photo_item_image);
 
         }
+    }
+
+
+    public interface OnPhotoClickListener{
+        void onClickPhoto(String url);
     }
 }

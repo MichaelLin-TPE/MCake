@@ -14,4 +14,6 @@ public interface HomeActivityPresenter {
     void onLoginButtonClickListener();
 
     void onLoadProductPage();
+
+    void onCheckUserCartAmount();
 }

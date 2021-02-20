@@ -1,6 +1,7 @@
 package com.cake.mcakeapp.firestore;
 
 import com.cake.mcakeapp.data.CommentData;
+import com.cake.mcakeapp.data.ProductData;
 import com.cake.mcakeapp.data.UserData;
 
 import java.util.ArrayList;
@@ -17,6 +18,22 @@ public interface FireStoreHandler {
     void getCommentData(OnCatchFireStoreResultListener<ArrayList<CommentData>> onCatchCommentDataListener);
 
     void saveCommentData(ArrayList<CommentData> allCommentList, OnCatchFireStoreResultListener<String> onSaveCommentListener);
+
+    void setProductList(String json);
+
+    void getProductList(OnCatchFireStoreResultListener<ArrayList<ProductData>> getProductListListener);
+
+    void addFavoriteProduct(ProductData data);
+
+    void catchOriginalFavoriteData();
+
+    ArrayList<ProductData> getFavoriteList();
+
+    void addCartProduct(ProductData data);
+
+    void catchOriginalCartData();
+
+    ArrayList<ProductData> getCartList();
 
     interface OnCatchFireStoreResultListener<T>{
         void onSuccessful(T data);

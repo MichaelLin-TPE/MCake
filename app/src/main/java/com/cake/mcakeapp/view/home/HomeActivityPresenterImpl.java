@@ -3,6 +3,7 @@ package com.cake.mcakeapp.view.home;
 import com.cake.mcakeapp.auth.AuthHandler;
 import com.cake.mcakeapp.auth.AuthHandlerImpl;
 import com.cake.mcakeapp.data.AccountManager;
+import com.cake.mcakeapp.data.ProductData;
 import com.cake.mcakeapp.data.UserData;
 import com.cake.mcakeapp.firestore.FireStoreHandler;
 import com.cake.mcakeapp.firestore.FireStoreHandlerImpl;
@@ -25,6 +26,7 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     public HomeActivityPresenterImpl(HomeActivityVu mView) {
         authHandler = new AuthHandlerImpl();
         fireStoreHandler = new FireStoreHandlerImpl();
+        fireStoreHandler.catchOriginalCartData();
         this.mView = mView;
     }
 
@@ -96,6 +98,16 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     @Override
     public void onLoadProductPage() {
         mView.showProductPage();
+    }
+
+    @Override
+    public void onCheckUserCartAmount() {
+
+        ArrayList<ProductData> cartList = fireStoreHandler.getCartList();
+
+        if (cartList == null || cartList.isEmpty()){
+
+        }
     }
 
     private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>> getUserListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>>() {

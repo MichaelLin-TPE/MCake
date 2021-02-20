@@ -65,4 +65,7 @@
     <string name="fail_to_get_photo_url">無法取得照片網址，請稍後再試。</string>
     <string name="title_upload_photo">上傳中，請稍候</string>
     <string name="fail_to_get_comment_list">拿不到評論資料</string>
+    <string name="re_select_photo">重選</string>
+    <string name="fail_to_get_product_list">無法取得商品列表</string>
+    <string name="please_login_or_register">請登入或註冊後完成你的操作。</string>
 </resources>

@@ -27,11 +27,9 @@ public class ImageHelper {
         return instance;
     }
 
-    private static DisplayImageOptions options;
-
     public static void init(){
         imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder()
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.user)
                 .showImageOnFail(R.drawable.user)
                 .showImageOnLoading(R.drawable.user)
