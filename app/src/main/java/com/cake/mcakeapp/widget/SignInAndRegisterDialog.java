@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cake.mcakeapp.R;
+import com.cake.mcakeapp.tool.TypefaceHelper;
 
 
 public class SignInAndRegisterDialog extends DialogFragment {
@@ -52,8 +53,12 @@ public class SignInAndRegisterDialog extends DialogFragment {
 
 
     private void initView(View view) {
+        TextView tvTitle = view.findViewById(R.id.sign_in_dialog_title);
         TextView tvSignIn = view.findViewById(R.id.sign_in_dialog_sign_in);
         TextView tvRegister = view.findViewById(R.id.sign_in_dialog_register);
+
+
+        tvTitle.setTypeface(TypefaceHelper.get(context, "Bock_Personaluse.otf"));
 
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,4 +24,7 @@
     <dimen name="comment_photo_size">80dp</dimen>
     <dimen name="product_photo_height">150dp</dimen>
     <dimen name="product_heart_size">20dp</dimen>
+    <dimen name="detail_banner_height">300dp</dimen>
+    <dimen name="buy_button_height">50dp</dimen>
+    <dimen name="detail_heart_size">30dp</dimen>
 </resources>

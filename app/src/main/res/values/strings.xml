@@ -68,4 +68,10 @@
     <string name="re_select_photo">重選</string>
     <string name="fail_to_get_product_list">無法取得商品列表</string>
     <string name="please_login_or_register">請登入或註冊後完成你的操作。</string>
+    <string name="reservse">預定</string>
+    <string name="product_name">產品名稱</string>
+    <string name="reservse_attention">注意事項：目前僅供 "基隆地區" 配送及預訂，敬請見諒。</string>
+    <string name="product_description">產品說明</string>
+    <string name="product_material">原料</string>
+    <string name="product_working_main_day">製作天數</string>
 </resources>

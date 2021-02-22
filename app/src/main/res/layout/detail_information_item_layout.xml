@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/detail_information_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/detail_information_heart"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
+        tools:text="產品名稱：蛋糕"
+        android:textColor="@color/text_default_color"
+        android:textSize="@dimen/small_text_size_14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_information_material"
+        app:layout_constraintTop_toBottomOf="@id/detail_information_name"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/detail_information_heart"
+        tools:text="原料：XXXXXXXX"
+        android:textColor="@color/text_default_color"
+        android:textSize="@dimen/small_text_size_14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_information_work_main_day"
+        app:layout_constraintTop_toBottomOf="@id/detail_information_material"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/detail_information_heart"
+        tools:text="製作天數：XXXXXXXX"
+        android:textColor="@color/text_default_color"
+        android:textSize="@dimen/small_text_size_14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_information_description"
+        app:layout_constraintTop_toBottomOf="@id/detail_information_work_main_day"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/detail_information_heart"
+        tools:text="產品說明：XXXXXXXX"
+        android:textColor="@color/text_default_color"
+        android:textSize="@dimen/small_text_size_14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_information_price"
+        app:layout_constraintTop_toBottomOf="@id/detail_information_description"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="$1000"
+        android:textColor="@color/app_main_color"
+        android:textSize="@dimen/small_text_size_20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_information_attention"
+        app:layout_constraintTop_toBottomOf="@id/detail_information_description"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/detail_information_price"
+        android:layout_marginEnd="10dp"
+        android:text="@string/reservse_attention"
+        android:textColor="@color/red"
+        android:textSize="@dimen/small_text_size_12sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageView
+        android:id="@+id/detail_information_heart"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/heart_empty"
+        android:layout_width="@dimen/detail_heart_size"
+        android:layout_height="@dimen/detail_heart_size"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

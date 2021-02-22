@@ -4,7 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_background"
     tools:context=".view.detail.ProductDetailActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_action_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/detail_action_bar_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/back"
+            android:layout_width="@dimen/menu_icon_size"
+            android:layout_height="@dimen/menu_icon_size"/>
+
+
+        <TextView
+            android:id="@+id/detail_action_bar_title"
+            tools:text="標題"
+            android:textSize="@dimen/normal_action_bar_title_size"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/app_main_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <View
+            android:background="@color/under_line_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/detail_action_bar_under_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_recycler_view"
+        android:padding="16dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@id/detail_action_bar"
+        app:layout_constraintBottom_toTopOf="@id/detail_btn_buy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+    <Button
+        android:id="@+id/detail_btn_buy"
+        android:text="@string/reservse"
+        android:textSize="@dimen/small_text_size_20sp"
+        android:fontFamily="sans-serif-thin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/btn_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buy_button_height"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
