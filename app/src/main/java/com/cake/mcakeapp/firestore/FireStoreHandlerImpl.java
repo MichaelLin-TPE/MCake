@@ -13,6 +13,7 @@ import com.cake.mcakeapp.data.UserData;
 import com.cake.mcakeapp.tool.JsonHelper;
 import com.cake.mcakeapp.tool.MichaelLog;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
 
     private AuthHandler authHandler;
 
-    private ArrayList<ProductData> allFavoriteList , cartList;
+    private ArrayList<ProductData> allFavoriteList, cartList;
 
     public FireStoreHandlerImpl() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -67,18 +69,18 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
         data.setPhotoUrl("");
         userDataArrayList.add(data);
         String userJson = JsonHelper.getGson().toJson(userDataArrayList);
-        Map<String,String> map = new HashMap<>();
-        map.put("userJson",userJson);
+        Map<String, String> map = new HashMap<>();
+        map.put("userJson", userJson);
         firebaseFirestore.collection(USER)
                 .document(USER_LIST)
                 .set(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             createUserDataListener.onSuccessful(MyApplication.getInstance().getApplicationContext().getString(R.string.create_data_successful));
 
-                        }else {
+                        } else {
                             createUserDataListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_create_data));
                         }
                     }
@@ -91,22 +93,23 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
+                if (error != null) {
                     getUserListListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_user_list));
                     return;
                 }
 
-                if (value != null && value.exists()){
-                    String json = (String)value.get("userJson");
+                if (value != null && value.exists()) {
+                    String json = (String) value.get("userJson");
 
-                    if (json == null){
+                    if (json == null) {
                         getUserListListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_user_list));
                         return;
                     }
 
-                    ArrayList<UserData> userDataList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<UserData>>(){}.getType());
+                    ArrayList<UserData> userDataList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<UserData>>() {
+                    }.getType());
 
-                    if (userDataList == null){
+                    if (userDataList == null) {
                         getUserListListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_user_list));
                         return;
                     }
@@ -129,22 +132,23 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
+                if (error != null) {
                     onCatchCommentDataListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_comment_list));
                     return;
                 }
 
-                if (value != null && value.exists()){
-                    String json = (String)value.get("json");
+                if (value != null && value.exists()) {
+                    String json = (String) value.get("json");
 
-                    if (json == null){
+                    if (json == null) {
                         onCatchCommentDataListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_comment_list));
                         return;
                     }
 
-                    ArrayList<CommentData> commentList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<CommentData>>(){}.getType());
+                    ArrayList<CommentData> commentList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<CommentData>>() {
+                    }.getType());
 
-                    if (commentList == null){
+                    if (commentList == null) {
                         onCatchCommentDataListener.onSuccessful(null);
                         return;
                     }
@@ -158,16 +162,16 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     @Override
     public void saveCommentData(ArrayList<CommentData> allCommentList, OnCatchFireStoreResultListener<String> onSaveCommentListener) {
         String json = JsonHelper.getGson().toJson(allCommentList);
-        Map<String,String> map = new HashMap<>();
-        map.put("json",json);
+        Map<String, String> map = new HashMap<>();
+        map.put("json", json);
         firebaseFirestore.collection(COMMENT).document(COMMENT_LIST)
                 .set(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             onSaveCommentListener.onSuccessful(MyApplication.getInstance().getApplicationContext().getString(R.string.create_data_successful));
-                        }else {
+                        } else {
                             onSaveCommentListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_create_data));
                         }
                     }
@@ -177,15 +181,15 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     @Override
     public void setProductList(String json) {
 
-        Map<String,String> map = new HashMap<>();
-        map.put("json",json);
+        Map<String, String> map = new HashMap<>();
+        map.put("json", json);
 
         firebaseFirestore.collection(PRODUCT).document(PRODUCT_LIST)
                 .set(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             MichaelLog.i("上傳商品資訊成功");
                         }
                     }
@@ -198,22 +202,23 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
+                if (error != null) {
                     getProductListListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_product_list));
                     return;
                 }
 
-                if (value != null && value.exists()){
-                    String json = (String)value.get("json");
+                if (value != null && value.exists()) {
+                    String json = (String) value.get("json");
 
-                    if (json == null){
+                    if (json == null) {
                         getProductListListener.onFail(MyApplication.getInstance().getApplicationContext().getString(R.string.fail_to_get_product_list));
                         return;
                     }
 
-                    ArrayList<ProductData> commentList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
+                    ArrayList<ProductData> commentList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<ProductData>>() {
+                    }.getType());
 
-                    if (commentList == null){
+                    if (commentList == null) {
                         getProductListListener.onSuccessful(null);
                         return;
                     }
@@ -227,21 +232,21 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     @Override
     public void addFavoriteProduct(ProductData data) {
 
-        if (!data.isCheckHeart()){
+        if (!data.isCheckHeart()) {
 
-            for (ProductData fav : allFavoriteList){
-                if (fav.getImageUrlArray().get(0).equals(data.getImageUrlArray().get(0))){
+            for (ProductData fav : allFavoriteList) {
+                if (fav.getImageUrlArray().get(0).equals(data.getImageUrlArray().get(0))) {
                     MichaelLog.i("刪除我的最愛");
                     allFavoriteList.remove(fav);
                     break;
                 }
             }
-        }else {
+        } else {
             allFavoriteList.add(data);
         }
         String json = JsonHelper.getGson().toJson(allFavoriteList);
-        Map<String,String> map = new HashMap<>();
-        map.put("json",json);
+        Map<String, String> map = new HashMap<>();
+        map.put("json", json);
         firebaseFirestore.collection(FAVORITE_DATA).document(authHandler.getCurrentUserEmail())
                 .set(map);
     }
@@ -250,40 +255,36 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     public void catchOriginalFavoriteData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getFavoriteListListener) {
         allFavoriteList = new ArrayList<>();
 
-        if (!authHandler.getCurrentUser()){
+        if (!authHandler.getCurrentUser()) {
             getFavoriteListListener.onSuccessful(allFavoriteList);
             return;
         }
 
-
-        DocumentReference documentReference = firebaseFirestore.collection(FAVORITE_DATA).document(authHandler.getCurrentUserEmail());
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        firebaseFirestore.collection(FAVORITE_DATA).document(authHandler.getCurrentUserEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
-                    getFavoriteListListener.onSuccessful(allFavoriteList);
-                    return;
-                }
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists() && document.getData() != null){
 
-                if (value != null && value.exists()){
-                    String json = (String)value.get("json");
+                        String json = (String) document.getData().get("json");
 
-                    if (json == null){
-                        getFavoriteListListener.onSuccessful(allFavoriteList);
-                        return;
+                        if (json == null){
+                            return;
+                        }
+                        allFavoriteList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<ProductData>>() {
+                        }.getType());
+
+                        if (allFavoriteList == null || allFavoriteList.isEmpty()) {
+                            getFavoriteListListener.onSuccessful(allFavoriteList);
+                            return;
+                        }
+                        MichaelLog.i("取得我的最愛資料");
+
                     }
-
-                    allFavoriteList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
-
-                    if (allFavoriteList == null || allFavoriteList.isEmpty()){
-                        getFavoriteListListener.onSuccessful(allFavoriteList);
-                        return;
-                    }
-                    MichaelLog.i("取得我的最愛資料");
-                    getFavoriteListListener.onSuccessful(allFavoriteList);
-                } else {
-                    getFavoriteListListener.onSuccessful(allFavoriteList);
                 }
+                getFavoriteListListener.onSuccessful(allFavoriteList);
             }
         });
     }
@@ -296,21 +297,21 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     @Override
     public void addCartProduct(ProductData data) {
 
-        if (!data.isCheckCart()){
-            for (ProductData fav : cartList){
-                if (fav.getImageUrlArray().get(0).equals(data.getImageUrlArray().get(0))){
+        if (!data.isCheckCart()) {
+            for (ProductData fav : cartList) {
+                if (fav.getImageUrlArray().get(0).equals(data.getImageUrlArray().get(0))) {
                     MichaelLog.i("刪除我的購物車");
                     cartList.remove(fav);
                     break;
                 }
             }
-        }else {
+        } else {
             cartList.add(data);
         }
 
         String json = JsonHelper.getGson().toJson(cartList);
-        Map<String,String> map = new HashMap<>();
-        map.put("json",json);
+        Map<String, String> map = new HashMap<>();
+        map.put("json", json);
 
         firebaseFirestore.collection(CART).document(authHandler.getCurrentUserEmail()).set(map);
     }
@@ -319,38 +320,38 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     public void catchOriginalCartData(OnCatchFireStoreResultListener<ArrayList<ProductData>> getCartListListener) {
         cartList = new ArrayList<>();
 
-        if (!authHandler.getCurrentUser()){
+        if (!authHandler.getCurrentUser()) {
             getCartListListener.onSuccessful(cartList);
             return;
         }
 
-        DocumentReference documentReference = firebaseFirestore.collection(CART).document(authHandler.getCurrentUserEmail());
-
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        firebaseFirestore.collection(CART).document(authHandler.getCurrentUserEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
-                    getCartListListener.onSuccessful(cartList);
-                    return;
-                }
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot != null && snapshot.exists() && snapshot.getData() != null){
 
-                if (value != null && value.exists()){
-                    String json = (String)value.get("json");
+                        String json = (String) snapshot.getData().get("json");
 
-                    if (json == null){
+                        MichaelLog.i("取得購物車json : "+json);
+
+                        cartList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
+
+                        if (cartList == null || cartList.isEmpty()){
+                            getCartListListener.onSuccessful(cartList);
+                            return;
+                        }
                         getCartListListener.onSuccessful(cartList);
-                        return;
-                    }
+                        MichaelLog.i("取得我的購物車資料");
 
-                    cartList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
-
-                    if (cartList == null || cartList.isEmpty()){
+                    }else {
+                        MichaelLog.i("snapshot is null");
                         getCartListListener.onSuccessful(cartList);
-                        return;
                     }
-                    getCartListListener.onSuccessful(cartList);
-                    MichaelLog.i("取得我的購物車資料");
                 }else {
+                    MichaelLog.i("購物車取得失敗");
                     getCartListListener.onSuccessful(cartList);
                 }
             }
@@ -360,5 +361,41 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
     @Override
     public ArrayList<ProductData> getCartList() {
         return cartList;
+    }
+
+    @Override
+    public void catchRealTimeCartData(OnCatchFireStoreResultListener<ArrayList<ProductData>> catchFireStoreResultListener) {
+
+        DocumentReference documentReference = firebaseFirestore.collection(CART).document(authHandler.getCurrentUserEmail());
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    MichaelLog.i("取得購物車失敗");
+                    return;
+                }
+
+                if (value != null && value.exists()) {
+                    String json = (String) value.get("json");
+
+                    if (json == null) {
+                        catchFireStoreResultListener.onSuccessful(null);
+                        return;
+                    }
+
+                    ArrayList<ProductData> carList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<ProductData>>() {
+                    }.getType());
+
+                    if (carList == null) {
+                        catchFireStoreResultListener.onSuccessful(null);
+                        return;
+                    }
+                    catchFireStoreResultListener.onSuccessful(carList);
+                    MichaelLog.i("取得資料了");
+                }
+            }
+        });
+
+
     }
 }

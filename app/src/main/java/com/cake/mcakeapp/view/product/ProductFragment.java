@@ -6,20 +6,21 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cake.mcakeapp.R;
 import com.cake.mcakeapp.data.ProductData;
+import com.cake.mcakeapp.tool.MichaelLog;
 import com.cake.mcakeapp.tool.Tools;
 import com.cake.mcakeapp.view.detail.ProductDetailActivity;
 import com.cake.mcakeapp.view.login.LoginFragment;
@@ -37,10 +38,13 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
 
     private FragmentActivity fragmentActivity;
 
+    private ProgressBar progressBar;
+
     public static final String PRODUCT_DATA = "product_data";
 
     private Context context;
 
+    private ProductAdapter adapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -80,7 +84,7 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
     private void initView(View view) {
         rvProductList = view.findViewById(R.id.product_recycler_view);
         rvProductList.setLayoutManager(new GridLayoutManager(context,2));
-
+        progressBar = view.findViewById(R.id.product_progress);
     }
 
     @Override
@@ -101,10 +105,15 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
 
     @Override
     public void showProductList(ArrayList<ProductData> data) {
-        ProductAdapter adapter = new ProductAdapter();
+        MichaelLog.i("顯示畫面");
+        adapter = new ProductAdapter();
         adapter.setProductList(data);
+        adapter.setHasStableIds(true);
+        ((SimpleItemAnimator)rvProductList.getItemAnimator()).setSupportsChangeAnimations(false);
         rvProductList.setAdapter(adapter);
-
+        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+        pool.setMaxRecycledViews(0,data.size());
+        rvProductList.setRecycledViewPool(pool);
         adapter.setOnProductIconClickListener(new ProductAdapter.OnProductIconClickListener() {
             @Override
             public void onClickHeart(ProductData data) {
@@ -160,5 +169,21 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
         Intent it = new Intent(context, ProductDetailActivity.class);
         it.putExtra(PRODUCT_DATA,data);
         startActivity(it);
+    }
+
+    @Override
+    public void refreshProductPage(ArrayList<ProductData> allProductDataList, int index) {
+        if (adapter == null){
+            MichaelLog.i("adapter is null 不能刷新畫面");
+            return;
+        }
+        MichaelLog.i("刷新畫面");
+        adapter.setProductList(allProductDataList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgressBar(boolean isShow) {
+        progressBar.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 }

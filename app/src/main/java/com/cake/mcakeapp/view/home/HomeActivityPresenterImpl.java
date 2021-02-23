@@ -64,9 +64,14 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
         }
         if (title.equals(mView.getMember())) {
             mView.showMemberCenterFragment();
+            return;
         }
         if (title.equals(mView.getComment())){
             mView.showCommentPage();
+            return;
+        }
+        if (title.equals(mView.getFavorite())){
+            mView.showFavoritePage();
         }
     }
 
@@ -103,7 +108,7 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
     @Override
     public void onCheckUserCartAmount() {
 
-        fireStoreHandler.catchOriginalCartData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
+        fireStoreHandler.catchRealTimeCartData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
             @Override
             public void onSuccessful(ArrayList<ProductData> data) {
                 if (data == null || data.isEmpty()){

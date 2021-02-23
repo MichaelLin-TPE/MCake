@@ -36,6 +36,8 @@ public interface FireStoreHandler {
 
     ArrayList<ProductData> getCartList();
 
+    void catchRealTimeCartData(OnCatchFireStoreResultListener<ArrayList<ProductData>> arrayListOnCatchFireStoreResultListener);
+
     interface OnCatchFireStoreResultListener<T>{
         void onSuccessful(T data);
         void onFail(String message);

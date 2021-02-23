@@ -74,4 +74,5 @@
     <string name="product_description">產品說明</string>
     <string name="product_material">原料</string>
     <string name="product_working_main_day">製作天數</string>
+    <string name="my_favorite">我的最愛</string>
 </resources>

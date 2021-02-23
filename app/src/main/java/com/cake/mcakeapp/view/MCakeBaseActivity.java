@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.cake.mcakeapp.R;
+import com.cake.mcakeapp.tool.ImageHelper;
 
 
 /**
@@ -18,8 +19,8 @@ public class MCakeBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_m_cake_base);
 
-
-
+        //初始化
+        ImageHelper.getInstance().init();
 
 
 

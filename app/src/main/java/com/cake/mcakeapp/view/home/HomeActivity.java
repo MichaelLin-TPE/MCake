@@ -23,6 +23,7 @@ import com.cake.mcakeapp.tool.TypefaceHelper;
 import com.cake.mcakeapp.view.cart.CartFragment;
 import com.cake.mcakeapp.view.comment.CommentFragment;
 import com.cake.mcakeapp.view.contact.ContactFragment;
+import com.cake.mcakeapp.view.favorite.FavoriteFragment;
 import com.cake.mcakeapp.view.login.LoginFragment;
 import com.cake.mcakeapp.view.member.MemberFragment;
 import com.cake.mcakeapp.view.order.OrderFragment;
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
     private RecyclerView rvMenu;
 
-    private TextView tvActionBarTitle, tvUserName , tvRegister,tvLogin,tvCartCount;
+    private TextView tvActionBarTitle, tvUserName, tvRegister, tvLogin, tvCartCount;
 
 
     @Override
@@ -61,8 +62,6 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         presenter.onLoadProductPage();
         presenter.onCheckUserCartAmount();
     }
-
-
 
 
     private void initView() {
@@ -83,6 +82,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         });
 
         tvLogin = findViewById(R.id.navigation_header_login);
+
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,27 +215,27 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
     @Override
     public void showProductPage() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), ProductFragment.newInstance(),false,ProductFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), ProductFragment.newInstance(), false, ProductFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void showOrderFragment() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), OrderFragment.newInstance(),false,OrderFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), OrderFragment.newInstance(), false, OrderFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void showCartFragment() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), CartFragment.newInstance(),false,CartFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), CartFragment.newInstance(), false, CartFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void showContactUsFragment() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), ContactFragment.newInstance(),false,ContactFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), ContactFragment.newInstance(), false, ContactFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void showMemberCenterFragment() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), MemberFragment.newInstance(),false,MemberFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), MemberFragment.newInstance(), false, MemberFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
@@ -245,12 +245,12 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
     @Override
     public void showCommentPage() {
-        Tools.replace(R.id.home_frame_layout,getSupportFragmentManager(), CommentFragment.newInstance(),false,CommentFragment.newInstance().getClass().getSimpleName());
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), CommentFragment.newInstance(), false, CommentFragment.newInstance().getClass().getSimpleName());
     }
 
     @Override
     public void setCartCount(int cartCount) {
-        tvCartCount.setText(String.format(Locale.getDefault(),"%d",cartCount));
+        tvCartCount.setText(String.format(Locale.getDefault(), "%d", cartCount));
     }
 
     @Override
@@ -258,13 +258,23 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         tvCartCount.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
+    @Override
+    public String getFavorite() {
+        return getString(R.string.my_favorite);
+    }
+
+    @Override
+    public void showFavoritePage() {
+        Tools.replace(R.id.home_frame_layout, getSupportFragmentManager(), FavoriteFragment.newInstance(), false, FavoriteFragment.newInstance().getClass().getSimpleName());
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        MichaelLog.i("HomeActivity 有收到資料 : "+requestCode);
-        for (Fragment fragment : getSupportFragmentManager().getFragments()){
-            fragment.onActivityResult(requestCode,resultCode,data);
+        MichaelLog.i("HomeActivity 有收到資料 : " + requestCode);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

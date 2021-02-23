@@ -20,14 +20,13 @@ public class ImageHelper {
 
     public static ImageHelper getInstance(){
         if (instance == null){
-            init();
             instance = new ImageHelper();
             return instance;
         }
         return instance;
     }
 
-    public static void init(){
+    public void init(){
         imageLoader = ImageLoader.getInstance();
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.user)

@@ -9,31 +9,53 @@ import java.util.ArrayList;
 
 public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
 
-    private ProductFragmentVu mView;
+    private final ProductFragmentVu mView;
 
-    private FireStoreHandler fireStoreHandler;
+    private final FireStoreHandler fireStoreHandler;
+
+    private final ArrayList<ProductData> allProductDataList;
 
 
     public ProductFragmentPresenterImpl(ProductFragmentVu mView) {
         this.mView = mView;
         fireStoreHandler = new FireStoreHandlerImpl();
+        allProductDataList = new ArrayList<>();
     }
 
     @Override
     public void onLoadProductList() {
+        mView.showProgressBar(true);
         fireStoreHandler.getProductList(getProductListListener);
     }
 
     //點愛心會做的事情
     @Override
     public void onProductHeartClickListener(ProductData data) {
+
+        refreshProductData(data);
+
         fireStoreHandler.addFavoriteProduct(data);
+    }
+
+    private void refreshProductData(ProductData data) {
+
+
+        int index = 0;
+        for (ProductData product : allProductDataList) {
+            if (product.getImageUrlArray().get(0).equals(data.getImageUrlArray().get(0))) {
+                break;
+            }
+            index++;
+        }
+        allProductDataList.set(index, data);
+        mView.refreshProductPage(allProductDataList,index);
     }
 
     //點購物車會出現的事情
     @Override
     public void onProductCartClickListener(ProductData data) {
         fireStoreHandler.addCartProduct(data);
+        refreshProductData(data);
     }
 
     @Override
@@ -56,18 +78,17 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
         mView.goToProductDetailActivity(data);
     }
 
-    private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>> getProductListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
+    private final FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>> getProductListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
         @Override
         public void onSuccessful(ArrayList<ProductData> data) {
-            if (data == null){
+            if (data == null) {
+                mView.showProgressBar(false);
                 mView.showToast(mView.getFailToGetProductList());
                 return;
             }
 
             //比對個人資料
             checkPersonalCartData(data);
-
-
 
 
         }
@@ -83,9 +104,12 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
         fireStoreHandler.catchOriginalCartData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
             @Override
             public void onSuccessful(ArrayList<ProductData> cartList) {
-                for (ProductData cart : cartList){
-                    for (ProductData product : data){
-                        if (cart.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
+
+
+
+                for (ProductData cart : cartList) {
+                    for (ProductData product : data) {
+                        if (cart.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))) {
                             product.setCheckCart(cart.isCheckCart());
                         }
                     }
@@ -106,14 +130,16 @@ public class ProductFragmentPresenterImpl implements ProductFragmentPresenter {
         fireStoreHandler.catchOriginalFavoriteData(new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<ProductData>>() {
             @Override
             public void onSuccessful(ArrayList<ProductData> favoriteList) {
-                for (ProductData fav : favoriteList){
-                    for (ProductData product : data){
-                        if (fav.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))){
+                for (ProductData fav : favoriteList) {
+                    for (ProductData product : data) {
+                        if (fav.getImageUrlArray().get(0).equals(product.getImageUrlArray().get(0))) {
                             product.setCheckHeart(fav.isCheckHeart());
                         }
                     }
                 }
 
+                allProductDataList.addAll(data);
+                mView.showProgressBar(false);
                 mView.showProductList(data);
             }
 

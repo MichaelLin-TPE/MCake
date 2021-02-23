@@ -23,6 +23,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
@@ -55,11 +56,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()){
+            onBindViewHolder(holder,position);
+        }else {
+            handleView(holder,position);
+        }
+    }
+
+    private void handleView(ViewHolder holder, int position) {
         ProductData data = productList.get(position);
 
+        holder.ivPhoto.setTag(data.getImageUrlArray().get(0));
         ImageHelper.getInstance().setImageResource(holder.ivPhoto,data.getImageUrlArray().get(0));
+
         holder.tvTitle.setText(data.getName());
         holder.tvState.setText("現正熱賣中");
         holder.tvPrice.setText(String.format(Locale.getDefault(),"$%s",data.getCurrentPrice()));
@@ -94,7 +109,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                 iconClickListener.onClickHeart(data);
 
-                notifyItemChanged(position);
+//                notifyDataSetChanged();
             }
         });
 
@@ -113,7 +128,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                 iconClickListener.onClickCart(data);
 
-                notifyItemChanged(position);
+//                notifyDataSetChanged();
             }
         });
 
@@ -123,6 +138,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 iconClickListener.onItemClick(data);
             }
         });
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        handleView(holder,position);
 
     }
 

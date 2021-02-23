@@ -52,4 +52,8 @@ public interface HomeActivityVu {
     void setCartCount(int cartCount);
 
     void showCartCount(boolean isShow);
+
+    String getFavorite();
+
+    void showFavoritePage();
 }

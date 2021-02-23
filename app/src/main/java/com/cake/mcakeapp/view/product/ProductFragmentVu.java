@@ -18,4 +18,8 @@ public interface ProductFragmentVu {
     void goToLoginPage();
 
     void goToProductDetailActivity(ProductData data);
+
+    void refreshProductPage(ArrayList<ProductData> allProductDataList,int index);
+
+    void showProgressBar(boolean isShow);
 }
