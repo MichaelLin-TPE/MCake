@@ -264,13 +264,13 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document != null && document.exists() && document.getData() != null){
+                    if (document != null && document.exists() && document.getData() != null) {
 
                         String json = (String) document.getData().get("json");
 
-                        if (json == null){
+                        if (json == null) {
                             return;
                         }
                         allFavoriteList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<ProductData>>() {
@@ -329,28 +329,29 @@ public class FireStoreHandlerImpl implements FireStoreHandler {
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot snapshot = task.getResult();
-                    if (snapshot != null && snapshot.exists() && snapshot.getData() != null){
+                    if (snapshot != null && snapshot.exists() && snapshot.getData() != null) {
 
                         String json = (String) snapshot.getData().get("json");
 
-                        MichaelLog.i("取得購物車json : "+json);
+                        MichaelLog.i("取得購物車json : " + json);
 
-                        cartList = JsonHelper.getGson().fromJson(json,new TypeToken<ArrayList<ProductData>>(){}.getType());
+                        cartList = JsonHelper.getGson().fromJson(json, new TypeToken<ArrayList<ProductData>>() {
+                        }.getType());
 
-                        if (cartList == null || cartList.isEmpty()){
+                        if (cartList == null || cartList.isEmpty()) {
                             getCartListListener.onSuccessful(cartList);
                             return;
                         }
                         getCartListListener.onSuccessful(cartList);
                         MichaelLog.i("取得我的購物車資料");
 
-                    }else {
+                    } else {
                         MichaelLog.i("snapshot is null");
                         getCartListListener.onSuccessful(cartList);
                     }
-                }else {
+                } else {
                     MichaelLog.i("購物車取得失敗");
                     getCartListListener.onSuccessful(cartList);
                 }

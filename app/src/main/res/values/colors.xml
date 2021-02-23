@@ -14,4 +14,5 @@
     <color name="grey">#959393</color>
     <color name="press_color">#F1C78A</color>
     <color name="stroke_line">#73A7A6A5</color>
+    <color name="black">#000000</color>
 </resources>

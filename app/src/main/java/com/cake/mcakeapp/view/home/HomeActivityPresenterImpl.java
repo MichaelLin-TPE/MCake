@@ -129,6 +129,11 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter{
 
     }
 
+    @Override
+    public void onButtonCartClickListener() {
+        mView.showCartFragment();
+    }
+
     private FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>> getUserListListener = new FireStoreHandler.OnCatchFireStoreResultListener<ArrayList<UserData>>() {
         @Override
         public void onSuccessful(ArrayList<UserData> data) {

@@ -75,4 +75,8 @@
     <string name="product_material">原料</string>
     <string name="product_working_main_day">製作天數</string>
     <string name="my_favorite">我的最愛</string>
+    <string name="remove">移除</string>
+    <string name="total">總計：</string>
+    <string name="check_out">結帳</string>
+    <string name="cart_no_data">購物車裡沒有任何東西，快點加緊選購吧～＊</string>
 </resources>

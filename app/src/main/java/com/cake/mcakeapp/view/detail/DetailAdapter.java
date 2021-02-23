@@ -98,12 +98,13 @@ public class DetailAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
+
         return 2;
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
-        private Banner banner;
+        private final Banner banner;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,9 +114,13 @@ public class DetailAdapter extends RecyclerView.Adapter{
 
     public static class InformationViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvName , tvMaterial , tvDescription,tvWorkMainDay,tvPrice;
+        private final TextView tvName;
+        private final TextView tvMaterial;
+        private final TextView tvDescription;
+        private final TextView tvWorkMainDay;
+        private final TextView tvPrice;
 
-        private ImageView ivHeart;
+        private final ImageView ivHeart;
 
         public InformationViewHolder(@NonNull View itemView) {
             super(itemView);

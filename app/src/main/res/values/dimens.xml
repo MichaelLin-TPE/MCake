@@ -27,4 +27,8 @@
     <dimen name="detail_banner_height">300dp</dimen>
     <dimen name="buy_button_height">50dp</dimen>
     <dimen name="detail_heart_size">30dp</dimen>
+    <dimen name="cart_photo_size">70dp</dimen>
+    <dimen name="cart_btn_remove_size">35dp</dimen>
+    <dimen name="cart_btn_remove_height">60dp</dimen>
+    <dimen name="page_logo_size">150dp</dimen>
 </resources>

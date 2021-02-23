@@ -102,6 +102,15 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
                 presenter.onNavigationViewClickListener();
             }
         });
+
+        ImageView ivCart = findViewById(R.id.home_action_bar_cart);
+        ivCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onButtonCartClickListener();
+            }
+        });
+
     }
 
     private void initPresenter() {
