@@ -14,4 +14,6 @@ public interface CartFragmentVu {
     void showNoCartData(boolean isShow);
 
     void clearView(ArrayList<ProductData> allCartList);
+
+    void goToDetailPage(ProductData data);
 }

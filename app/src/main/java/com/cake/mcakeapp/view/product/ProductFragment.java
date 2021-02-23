@@ -169,6 +169,7 @@ public class ProductFragment extends Fragment implements ProductFragmentVu {
         Intent it = new Intent(context, ProductDetailActivity.class);
         it.putExtra(PRODUCT_DATA,data);
         startActivity(it);
+        Tools.startActivityInAnim(fragmentActivity);
     }
 
     @Override

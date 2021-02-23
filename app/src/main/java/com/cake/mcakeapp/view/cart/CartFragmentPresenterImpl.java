@@ -75,4 +75,9 @@ public class CartFragmentPresenterImpl implements CartFragmentPresenter {
 
         mView.refreshCartView(position,allCartList);
     }
+
+    @Override
+    public void onCartItemClickListener(ProductData data) {
+        mView.goToDetailPage(data);
+    }
 }

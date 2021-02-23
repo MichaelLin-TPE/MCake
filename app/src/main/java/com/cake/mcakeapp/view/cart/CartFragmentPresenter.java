@@ -6,4 +6,6 @@ public interface CartFragmentPresenter {
     void onLoadData();
 
     void onButtonRemoveClickListener(ProductData data,int position);
+
+    void onCartItemClickListener(ProductData data);
 }

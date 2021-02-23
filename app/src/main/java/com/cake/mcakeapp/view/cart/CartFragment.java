@@ -1,6 +1,7 @@
 package com.cake.mcakeapp.view.cart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cake.mcakeapp.R;
 import com.cake.mcakeapp.data.ProductData;
 import com.cake.mcakeapp.tool.MichaelLog;
+import com.cake.mcakeapp.tool.Tools;
+import com.cake.mcakeapp.view.detail.ProductDetailActivity;
 
 import java.util.ArrayList;
+
+import static com.cake.mcakeapp.view.product.ProductFragment.PRODUCT_DATA;
 
 
 public class CartFragment extends Fragment implements CartFragmentVu {
@@ -102,7 +107,7 @@ public class CartFragment extends Fragment implements CartFragmentVu {
 
             @Override
             public void onItemClick(ProductData data) {
-
+                presenter.onCartItemClickListener(data);
             }
 
             @Override
@@ -134,5 +139,13 @@ public class CartFragment extends Fragment implements CartFragmentVu {
     public void clearView(ArrayList<ProductData> allCartList) {
         adapter.setCartList(allCartList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void goToDetailPage(ProductData data) {
+        Intent it = new Intent(fragmentActivity, ProductDetailActivity.class);
+        it.putExtra(PRODUCT_DATA,data);
+        startActivity(it);
+        Tools.startActivityInAnim(fragmentActivity);
     }
 }
